@@ -41,7 +41,15 @@ class Car(pygame.sprite.Sprite):
         self.direction = direction
         self.speed = speed
         self.start_road = start_road
+        self.rotate_car()
 
+    def rotate_car(self):
+        if self.direction == 'right':
+            self.image = pygame.transform.flip(self.image, True, False)
+        elif self.direction == 'up':
+            self.image = pygame.transform.rotate(self.image, -90)
+        elif self.direction == 'down':
+            self.image = pygame.transform.rotate(self.image, 90)
     def move(self):
         if self.direction == 'up':
             self.rect.y -= self.speed
@@ -65,7 +73,6 @@ horizontal_road = Road(0, HEIGHT // 2 - ROAD_WIDTH // 2, WIDTH, ROAD_WIDTH, 'hor
 
 cars = pygame.sprite.Group()
 
-# Counters for each side
 counter_right = 0
 counter_left = 0
 counter_up = 0
@@ -100,10 +107,10 @@ while running:
     cars.draw(screen)
 
     font = pygame.font.Font(None, 36)
-    text_right = font.render(f"Left road: {counter_right}", True, BLACK)
-    text_left = font.render(f"Right road: {counter_left}", True, BLACK)
-    text_up = font.render(f"Bottom road: {counter_up}", True, BLACK)
-    text_down = font.render(f"Top road: {counter_down}", True, BLACK)
+    text_right = font.render(f"Left: {counter_right}", True, BLACK)
+    text_left = font.render(f"Right: {counter_left}", True, BLACK)
+    text_up = font.render(f"Bottom: {counter_up}", True, BLACK)
+    text_down = font.render(f"Top: {counter_down}", True, BLACK)
     screen.blit(text_right, (WIDTH - 150, 10))
     screen.blit(text_left, (WIDTH - 150, 50))
     screen.blit(text_up, (WIDTH - 150, 90))
